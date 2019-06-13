@@ -13,7 +13,6 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +62,7 @@ public class ScoreController extends BaseHandler {
         final int level = extractLevel(exchange.getRequestURI().getPath());
         scoreService.saveScore(user, level, score);
 
-        exchange.sendResponseHeaders(200, 0);
-        final OutputStream output = exchange.getResponseBody();
-        output.close();
-        exchange.close();
+        writeSuccessfulResponse(exchange, "");
     }
 
     private void handleHighScoresRequest(final HttpExchange exchange) throws IOException {
@@ -80,15 +76,11 @@ public class ScoreController extends BaseHandler {
             response = highScoresAsCsv(highScores);
         }
 
-        exchange.sendResponseHeaders(200, response.getBytes().length);
-        final OutputStream output = exchange.getResponseBody();
-        output.write(response.getBytes());
-        output.close();
-        exchange.close();
+        writeSuccessfulResponse(exchange, response);
     }
 
     private String extractSessionKey(final HttpExchange exchange) {
-        final Map<String, List<String>> query = splitQuery(exchange.getRequestURI().getQuery());
+        final Map<String, List<String>> query = splitQueryParams(exchange.getRequestURI().getQuery());
         return query.get("sessionkey").get(0);
     }
 
@@ -106,7 +98,7 @@ public class ScoreController extends BaseHandler {
     private String highScoresAsCsv(final List<UserScore> highScores) {
         final StringBuilder builder = new StringBuilder();
         for (final UserScore score : highScores) {
-            builder.append(score.toString() + ",");
+            builder.append(score.toString()).append(",");
         }
         // Delete last comma.
         builder.deleteCharAt(builder.lastIndexOf(","));

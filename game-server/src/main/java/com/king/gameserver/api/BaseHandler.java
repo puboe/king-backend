@@ -4,6 +4,7 @@ import com.king.gameserver.error.ExceptionHandler;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Arrays;
@@ -34,7 +35,14 @@ public abstract class BaseHandler {
 
     protected abstract void execute(final HttpExchange exchange) throws IOException;
 
-    protected static Map<String, List<String>> splitQuery(final String query) {
+    protected void writeSuccessfulResponse(final HttpExchange exchange, final String responseBody) throws IOException {
+        exchange.sendResponseHeaders(200, responseBody.getBytes().length);
+        final OutputStream output = exchange.getResponseBody();
+        output.write(responseBody.getBytes());
+        output.close();
+    }
+
+    protected static Map<String, List<String>> splitQueryParams(final String query) {
         if (query == null || "".equals(query)) {
             return Collections.emptyMap();
         }

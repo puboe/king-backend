@@ -31,11 +31,7 @@ public class UserController extends BaseHandler {
         final long userId = extractUserId(exchange.getRequestURI().getPath());
         final String session = userService.createSessionKey(userId);
 
-        exchange.sendResponseHeaders(200, session.getBytes().length);
-        OutputStream output = exchange.getResponseBody();
-        output.write(session.getBytes());
-        output.flush();
-        exchange.close();
+        writeSuccessfulResponse(exchange, session);
     }
 
     private long extractUserId(final String requestPath) {
