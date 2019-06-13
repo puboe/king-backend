@@ -3,6 +3,8 @@ package com.king.gameserver.api;
 import com.king.gameserver.error.ExceptionHandler;
 import com.sun.net.httpserver.HttpExchange;
 
+import java.io.IOException;
+
 public abstract class BaseHandler {
 
     private final ExceptionHandler exceptionHandler;
@@ -19,7 +21,7 @@ public abstract class BaseHandler {
         }
     }
 
-    protected abstract void execute(final HttpExchange exchange) throws Exception;
+    protected abstract void execute(final HttpExchange exchange) throws IOException;
 
 
 //    protected <T> T readRequest(InputStream is, Class<T> type) {

@@ -6,6 +6,7 @@ import com.king.gameserver.error.ExceptionHandler;
 import com.king.gameserver.error.MethodNotAllowedException;
 import com.sun.net.httpserver.HttpExchange;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class UserController extends BaseHandler {
@@ -18,12 +19,16 @@ public class UserController extends BaseHandler {
     }
 
     @Override
-    protected void execute(final HttpExchange exchange) throws Exception {
+    protected void execute(final HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().equals("GET")) {
             throw new MethodNotAllowedException(exchange.getRequestMethod());
         }
 
-        final long userId = 12345;
+        handleLogin(exchange);
+    }
+
+    private void handleLogin(final HttpExchange exchange) throws IOException {
+        final long userId = extractUserId(exchange.getRequestURI().getPath());
         final String session = userService.createSessionKey(userId);
 
         exchange.sendResponseHeaders(200, session.getBytes().length);
@@ -31,5 +36,10 @@ public class UserController extends BaseHandler {
         output.write(session.getBytes());
         output.flush();
         exchange.close();
+    }
+
+    private long extractUserId(final String requestPath) {
+        final String[] splits = requestPath.split("/");
+        return Long.valueOf(splits[1]);
     }
 }
