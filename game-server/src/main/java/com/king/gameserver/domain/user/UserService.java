@@ -28,6 +28,10 @@ public class UserService {
     }
 
     public User getAuthenticatedUser(final String sessionKey) {
+        if (sessionKey == null) {
+            return null;
+        }
+
         final UserSession session = sessionRepository.getUserSessionByKey(sessionKey);
         if (session == null || !isValidSession(session)) {
             sessionRepository.deleteSessionByKey(sessionKey);
