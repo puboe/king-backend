@@ -1,0 +1,4 @@
+rootProject.name = 'game-server'
+include 'game-server'
+findProject(':game-server')?.name = 'com.king.game-server'
+
