@@ -40,6 +40,6 @@ public class UserController extends BaseHandler {
 
     private long extractUserId(final String requestPath) {
         final String[] splits = requestPath.split("/");
-        return Long.valueOf(splits[1]);
+        return Long.parseLong(splits[1]);
     }
 }
