@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentMap;
 
 public class InMemoryUserRepository implements UserRepository {
 
-    final ConcurrentMap<Long, User> userStorage = new ConcurrentHashMap<>();
+    private final ConcurrentMap<Long, User> userStorage = new ConcurrentHashMap<>();
 
     @Override
     public User saveUser(final User user) {

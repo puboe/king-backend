@@ -24,7 +24,7 @@ public class ExceptionHandler {
             responseBody.write(throwable.getMessage().getBytes());
             responseBody.close();
 
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
