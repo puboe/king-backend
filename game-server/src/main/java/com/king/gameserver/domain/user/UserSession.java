@@ -18,10 +18,6 @@ public class UserSession {
         return userId;
     }
 
-    public String getSessionKey() {
-        return sessionKey;
-    }
-
     public long getTimestamp() {
         return timestamp;
     }

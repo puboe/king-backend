@@ -1,8 +1,8 @@
 package com.king.gameserver.domain.user;
 
-public class UserService {
+import com.king.gameserver.config.Configurations;
 
-    private static final int SESSION_VALIDITY_TIME = 10 * 60 * 1000;
+public class UserService {
 
     private UserRepository userRepository;
     private SessionRepository sessionRepository;
@@ -41,7 +41,7 @@ public class UserService {
     }
 
     private boolean isValidSession(final UserSession session) {
-        long validity = System.currentTimeMillis() - SESSION_VALIDITY_TIME;
+        long validity = System.currentTimeMillis() - Configurations.SESSION_VALIDITY_TIME;
         return session.getTimestamp() >= validity;
     }
 }

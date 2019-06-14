@@ -1,15 +1,16 @@
 package com.king.gameserver.domain.user;
 
+import com.king.gameserver.config.Configurations;
+
 import java.security.SecureRandom;
 
 public class SessionGenerator {
 
-    private static final int SESSION_KEY_LENGTH = 21;
     private static final String CHARSET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static SecureRandom rnd = new SecureRandom();
 
     public String createSession() {
-        return randomString(SESSION_KEY_LENGTH);
+        return randomString(Configurations.SESSION_KEY_LENGTH);
     }
 
     private String randomString(final int len) {

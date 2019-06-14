@@ -1,6 +1,7 @@
 package com.king.gameserver;
 
 import com.king.gameserver.api.router.RouteHandler;
+import com.king.gameserver.config.Configurations;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 
-        final int serverPort = 8000;
+        final int serverPort = Configurations.SERVER_PORT;
         final HttpServer server = HttpServer.create(new InetSocketAddress(serverPort), 0);
 
         final RouteHandler routeHandler =

@@ -1,12 +1,11 @@
 package com.king.gameserver.domain.score;
 
+import com.king.gameserver.config.Configurations;
 import com.king.gameserver.domain.user.User;
 
 import java.util.List;
 
 public class ScoreService {
-
-    private static final int LIMIT = 15;
 
     private ScoreRepository scoreRepository;
 
@@ -19,6 +18,6 @@ public class ScoreService {
     }
 
     public List<UserScore> getHighScores(final int level) {
-        return scoreRepository.getHighScoresForLevel(level, LIMIT);
+        return scoreRepository.getHighScoresForLevel(level, Configurations.HIGH_SCORES_LIMIT);
     }
 }
