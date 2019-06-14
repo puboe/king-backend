@@ -81,7 +81,8 @@ public class ScoreController extends BaseHandler {
 
     private String extractSessionKey(final HttpExchange exchange) {
         final Map<String, List<String>> query = splitQueryParams(exchange.getRequestURI().getQuery());
-        return query.get("sessionkey").get(0);
+        final List<String> sessionKey = query.get("sessionkey");
+        return sessionKey != null ? sessionKey.get(0) : null;
     }
 
     private int extractLevel(final String requestPath) {
